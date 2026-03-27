@@ -27,4 +27,4 @@ So why are you still reading *this* when you could be reading your own custom-ma
 
 
 
-©Beanstalk313 - Code is herein provided for review only. Redistribution without direct consent from Beanstalk313 is a violation of copyright laws.
+©2026 Beanstalk313 - Code is herein provided for review only. Redistribution without direct consent from Beanstalk313 is a violation of copyright laws.
