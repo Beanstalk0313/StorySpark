@@ -25,3 +25,6 @@ StorySpark is your gateway to creating complex stories, fanfictions, and even pa
 
 So why are you still reading *this* when you could be reading your own custom-made story? Get on over to StorySpark's [website](storyspark-b313.web.app) and start creating now!
 
+
+
+©Beanstalk313 - Code is herein provided for review only. Redistribution without direct consent from Beanstalk313 is a violation of copyright laws.
