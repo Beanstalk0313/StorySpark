@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StorySpark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+      /* CSS Variables for Theme Colors */
+      :root {
+        --bg-color: #f8fafc; /* Slate-50 */
+        --blob-1: #bfdbfe; /* Blue-200 */
+        --blob-2: #fed7aa; /* Orange-200 */
+        --blob-3: #a5f3fc; /* Cyan-200 */
+        --text-color: #0f172a;
+        
+        /* Default Accent (Amber-500 equivalent) */
+        --accent-color: #f59e0b;
+        --accent-hover: #d97706;
+        --accent-ring: rgba(245, 158, 11, 0.5);
+      }
+
+      .dark {
+        --bg-color: #020617; /* Slate-950 */
+        --blob-1: #4f46e5; /* Indigo-600 */
+        --blob-2: #d97706; /* Amber-600 */
+        --blob-3: #0891b2; /* Cyan-600 */
+        --text-color: #f8fafc;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: transparent;
+        color: var(--text-color);
+        overflow-x: hidden;
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+      
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+        background-color: var(--bg-color);
+        transition: background-color 0.5s ease;
+      }
+
+      /* Liquid Background Blobs - Styles retained for React injection */
+      .ambient-light {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: float 20s infinite alternate ease-in-out;
+        transition: background 1s ease;
+      }
+
+      .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, var(--blob-1), transparent);
+        animation-delay: 0s;
+      }
+
+      .blob-2 {
+        bottom: -10%;
+        right: -10%;
+        width: 60vw;
+        height: 60vw;
+        background: radial-gradient(circle, var(--blob-2), transparent);
+        animation-delay: -5s;
+      }
+
+      .blob-3 {
+        top: 40%;
+        left: 40%;
+        width: 40vw;
+        height: 40vw;
+        background: radial-gradient(circle, var(--blob-3), transparent);
+        animation-delay: -10s;
+      }
+
+      @keyframes float {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.05); 
+      }
+      .dark ::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5); 
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(15, 23, 42, 0.2); 
+        border-radius: 4px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1); 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(15, 23, 42, 0.4); 
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2); 
+      }
+
+      /* --- LITE MODE OVERRIDES --- */
+      html.lite-mode .ambient-light {
+        display: none !important;
+      }
+
+      /* Global Performance Resets */
+      html.lite-mode * {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        transition: none !important;
+        animation: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      html.lite-mode .animate-fade-in {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      
+      /* Background Override Logic - Opaque colors to avoid blending calculations */
+      html.lite-mode:not(.dark) body {
+         background-color: #f1f5f9 !important; 
+      }
+
+      html.lite-mode:not(.dark) .bg-white\/40, 
+      html.lite-mode:not(.dark) .bg-white\/50,
+      html.lite-mode:not(.dark) .bg-white\/60,
+      html.lite-mode:not(.dark) .bg-white\/80,
+      html.lite-mode:not(.dark) .bg-white\/90 {
+          background-color: #ffffff !important;
+          border: 1px solid #cbd5e1 !important; 
+      }
+
+      html.lite-mode.dark body {
+         background-color: #020617 !important; 
+      }
+
+      html.lite-mode.dark .dark\:bg-white\/5,
+      html.lite-mode.dark .dark\:bg-white\/10, 
+      html.lite-mode.dark .dark\:bg-slate-900\/50,
+      html.lite-mode.dark .dark\:bg-slate-900\/80,
+      html.lite-mode.dark .dark\:bg-slate-950\/80 {
+          background-color: #1e293b !important; 
+          border: 1px solid #334155 !important; 
+      }
+      
+      html.lite-mode.dark .dark\:bg-black\/20,
+      html.lite-mode.dark .dark\:bg-black\/40 {
+          background-color: #0f172a !important; 
+          border: 1px solid #334155 !important;
+      }
+
+      html.lite-mode .bg-gradient-to-r,
+      html.lite-mode .bg-gradient-to-br {
+          background: none !important;
+          background-color: var(--bg-color) !important;
+      }
+
+      html.lite-mode button[class*="bg-[var(--accent-color)]"] {
+          background-color: var(--accent-color) !important;
+          color: white !important;
+          border: 1px solid rgba(0,0,0,0.1) !important;
+      }
+      
+      html.lite-mode.dark .text-slate-500,
+      html.lite-mode.dark .text-slate-600 {
+          color: #94a3b8 !important; 
+      }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "firebase/app": "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js",
+    "firebase/database": "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js",
+    "@google/genai": "https://esm.sh/@google/genai@1.29.1",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "docx": "https://esm.sh/docx@8.5.0",
+    "jszip": "https://esm.sh/jszip@3.10.1",
+    "mammoth": "https://cdn.jsdelivr.net/npm/mammoth@1.6.0/+esm",
+    "pdfjs-dist": "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/+esm",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "path": "https://esm.sh/path@^0.12.7",
+    "url": "https://esm.sh/url@^0.11.4",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "firebase/": "https://esm.sh/firebase@^12.8.0/"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://js.puter.com/v2/"></script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

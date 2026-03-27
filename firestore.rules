@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /books/{bookId} {
+      // 1. Book Rules: Standard ownership check
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+
+      // 2. Chapter Rules
+      match /chapters/{chapterId} {
+        // Helper to check if the user owns the PARENT book (for old chapters)
+        function parentIsOwned() {
+          return get(/databases/$(database)/documents/books/$(bookId)).data.userId == request.auth.uid;
+        }
+
+        // CREATE: Check the INCOMING data (fixes the Batch Create error)
+        allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+
+        // READ, UPDATE, DELETE: Check the EXISTING data OR the Parent
+        // This allows access if:
+        // a) The chapter has your ID stamped on it (New/Healed data)
+        // b) OR The parent book belongs to you (Legacy data)
+        allow read, update, delete: if request.auth != null && (
+          resource.data.userId == request.auth.uid || parentIsOwned()
+        );
+      }
+    }
+
+    match /perchance_sync/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

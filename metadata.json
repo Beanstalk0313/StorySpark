@@ -1,0 +1,5 @@
+{
+  "name": "StorySpark",
+  "description": "An application that uses AI to write entire original books or fan-fiction continuations of existing series based on user prompts.",
+  "requestFramePermissions": []
+}

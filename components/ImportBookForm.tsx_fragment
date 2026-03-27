@@ -1,0 +1,46 @@
+  // Handle Electron native book import
+  useEffect(() => {
+    const pendingImport = sessionStorage.getItem('storyspark-pending-book-import');
+    if (pendingImport) {
+        const processImport = async () => {
+            try {
+                const data = JSON.parse(pendingImport);
+                const { content, extension, fileName } = data;
+                
+                setFileName(fileName || 'Native Import');
+                setIsParsing(true);
+
+                if (extension === '.ssbf') {
+                    const parsedData = JSON.parse(content);
+                    if (parsedData.format === 'storyspark-book-file' && parsedData.request && parsedData.chapters) {
+                        setSsbfData(parsedData);
+                        const titleMatch = parsedData.chapters[0]?.content?.match(/^#\s(.*?)$/m);
+                        const bookTitle = titleMatch ? `'${titleMatch[1]}'` : `'${fileName}'`;
+                        setImportedText(`Successfully loaded ${bookTitle}. This file contains ${parsedData.chapters.length} chapter(s). Fine-tune settings below if needed, then click 'Import Book'.`);
+                        setContinuationPrompt(parsedData.request.plot || '');
+                        if (parsedData.request.bookLength) setBookLength(parsedData.request.bookLength);
+                        if (parsedData.request.chapterLength) setChapterLength(parsedData.request.chapterLength);
+                    }
+                } else if (extension === '.pdf') {
+                    // Convert electron buffer (Uint8Array) to ArrayBuffer
+                    const buffer = new Uint8Array(content.data).buffer;
+                    const text = await readPdfFromBuffer(buffer);
+                    setImportedText(text);
+                } else if (extension === '.docx') {
+                    const buffer = new Uint8Array(content.data).buffer;
+                    const text = await readDocxFromBuffer(buffer);
+                    setImportedText(text);
+                } else {
+                    // txt, md, etc.
+                    setImportedText(content);
+                }
+            } catch (e) {
+                console.error('Failed to parse pending book import:', e);
+            } finally {
+                setIsParsing(false);
+                sessionStorage.removeItem('storyspark-pending-book-import');
+            }
+        };
+        processImport();
+    }
+  }, []);
