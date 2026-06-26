@@ -27,4 +27,6 @@ So why are you still reading *this* when you could be reading your own custom-ma
 
 
 
-©2026 Beanstalk313 - Code is herein provided for review only. Redistribution without direct consent from Beanstalk313 is a violation of copyright laws.
+## Licensing
+
+StorySpark is licensed under a custom Beanstalk313 license, the Black Hawk v1 license. For more details, see [license](LICENSE)
