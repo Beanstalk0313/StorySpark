@@ -24,9 +24,7 @@ const AppFooter: React.FC<AppFooterProps> = ({ onNavigate }) => {
                 </div>
                 <div className="mb-6 text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed bg-white/30 dark:bg-white/5 p-3 rounded-2xl border border-white/40 dark:border-white/5">
                     <p className="font-bold mb-1">Feedback & Support</p>
-                    Reach out to <a href="mailto:beanstalk0013+StorySpark@gmail.com" className="text-[var(--accent-color)] font-mono hover:underline">beanstalk0013+StorySpark@gmail.com</a>. 
-                    <p className="mt-1 opacity-60 italic">Adding the "+StorySpark" suffix ensures your request is prioritized and helps me know exactly what you're looking for!</p>
-                </div>
+                    Reach out to <a href="mailto:beanstalk313@outlook.com" className="text-[var(--accent-color)] font-mono hover:underline">beanstalk0013+StorySpark@gmail.com</a>. 
                 <div className="text-xs text-slate-400 dark:text-slate-600">
                     <p>&copy; {new Date().getFullYear()} StorySpark. All rights reserved.</p>
                     <p className="mt-1">StorySpark is not affiliated with Puter.js, Google, or any referenced franchises.</p>
