@@ -132,7 +132,7 @@ const LandingPage: React.FC<LandingPageProps & { onViewExtension?: () => void }>
                                             Beta App Coming Soon
                                         </div>
                                         <p className="text-xs text-orange-500/70 text-center md:text-left">
-                                            Contact <strong>beanstalk0013+StorySpark@gmail.com</strong> to join the Beta.
+                                            Contact <strong>beanstalk313@outlook.com</strong> to join the Beta.
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-2 text-slate-500 text-sm italic py-4">
