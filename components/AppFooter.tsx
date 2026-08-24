@@ -18,9 +18,6 @@ const AppFooter: React.FC<AppFooterProps> = ({ onNavigate }) => {
                     </button>
                     <button onClick={() => onNavigate('/privacy')} className="hover:text-[var(--accent-color)] transition-colors">Privacy Policy</button>
                     <button onClick={() => onNavigate('/disclaimer')} className="hover:text-[var(--accent-color)] transition-colors">AI Disclaimer</button>
-                    <a href="https://discord.gg/your-discord-link" target="_blank" rel="noopener noreferrer" className="hover:text-[#5865F2] transition-colors flex items-center gap-1">
-                        Discord
-                    </a>
                 </div>
                 <div className="mb-6 text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed bg-white/30 dark:bg-white/5 p-3 rounded-2xl border border-white/40 dark:border-white/5">
                     <p className="font-bold mb-1">Feedback & Support</p>
